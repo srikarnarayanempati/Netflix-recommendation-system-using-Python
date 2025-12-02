@@ -1,28 +1,55 @@
-# Netflix-Recommendation-System
-A flask web-app which can be used to get recommendations for a tv-show/movie, the app recommends a list of media according to the input.
+# Movie-Recommendation-System
 
-# Screenshot 1 : Main Page 
-Here the user can enter their movie of choice, for example I have entered La Casa De Papel a Spanish Netflix original show.
-![](Screenshots/screenshot1.PNG)
-# Screenshot 2 : Recommendation Page 
-Here the user will get recommendations, for example I recieved Elite(another spanish Netflix original) as my top recommendation 
-![](Screenshots/screenshot2.PNG)
+This application provides all the details of the requested movie such as overview, genre, release date, rating, runtime, top cast, reviews, recommended movies, etc.
 
-# Problem Description
-Netflix is all about connecting people to the movies they love. To help customers find those movies, they developed world-class movie recommendation system: CinematchSM. Its job is to predict whether someone will enjoy a movie based on how much they liked or disliked other movies. Netflix use those predictions to make personal movie recommendations based on each customer’s unique tastes. And while Cinematch is doing pretty well, it can always be made better.
+The details of the movies(title, genre, runtime, ratings, posters, etc) are fetched using an API by TMDB, https://www.themoviedb.org, and using the IMDB id of the movie in the API, I did web scraping to get the reviews given by the user in the IMDB site using `beautifulsoup4` and performed sentiment analysis on those reviews.
 
-Now there are a lot of interesting alternative approaches to how Cinematch works that netflix haven’t tried. Some are described in the literature, some aren’t. We’re curious whether any of these can beat Cinematch by making better predictions. Because, frankly, if there is a much better approach it could make a big difference to our customers and our business.
+## Link to the application
 
-# Problem Statement
-Netflix provided a lot of anonymous rating data, and a prediction accuracy bar that is 10% better than what Cinematch can do on the same training data set. (Accuracy is a measurement of how closely predicted ratings of movies match subsequent actual ratings.)
+Check out the live demo: https://lookupforcinema.herokuapp.com
 
-# Data Overview
-Source of Data : https://www.kaggle.com/netflix-inc/netflix-prize-data
+# Medium Article About My Project
 
-Data files : combined_data_1.txt combined_data_2.txt combined_data_3.txt combined_data_4.txt movie_titles.csv
+https://medium.com/analytics-vidhya/build-a-movie-recommendation-flask-based-deployment-8e2970f1f5f1
 
-The first line of each file [combined_data_1.txt, combined_data_2.txt, combined_data_3.txt, combined_data_4.txt] contains the movie id followed by a colon. Each subsequent line in the file corresponds to a rating from a customer and its date in the following format:
+## Finding similar movies
+### Without taking content into account (Just based on ratings)
 
-CustomerID,Rating,Date
+Here just based on the ratings of the users for different movies, we use K nearest neighbours algorithm to find the movies which are similar.
 
-MovieIDs range from 1 to 17770 sequentially. CustomerIDs range from 1 to 2649429, with gaps. There are 480189 users. Ratings are on a five star (integral) scale from 1 to 5. Dates have the format YYYY-MM-DD.
+### With taking Content into account
+
+Here we just information about the movies, in this case the information of genres to predict the most similar movies.
+
+## Matrix Factorisation(Collabarative Filtering)
+
+Two approaches were tried to do matrix factorisation, the low rank method is very slow, so used scipy's SVD for sparse matrix.
+
+## Architecture
+
+![110212434-597bb700-7ec1-11eb-9ffa-7ac319e33123](https://user-images.githubusercontent.com/41158838/140876791-13716f4e-7e62-4f1e-8f06-155ce8360f16.jpg)
+
+## Deep Learning Methods
+
+One popular recommender systems approach is called Matrix Factorisation. It works on the principle that we can learn a low-dimensional representation (embedding) of user and movie. For example, for each movie, we can have how much action it has, how long it is, and so on. For each user, we can encode how much they like action, or how much they like long movies, etc. Thus, we can combine the user and the movie embeddings to estimate the ratings on unseen movies. This approach can also be viewed as: given a matrix (A [M X N]) containing users and movies, we want to estimate low dimensional matrices (W [M X k] and H [M X k]), such that: A≈W.H<sup>T</sub>
+### 1.Matrix Factorisation based on Deep learning
+### 2. Matrix Factorisation based on Deep learning with non negative embeddings.
+### 3. Advanced neural network with different number of embeddings for both and movies.
+
+## Required Tools
+
+1. Keras
+2. Scipy
+3. Numpy
+4. Pandas
+5. python 3
+
+### Sources of the datasets 
+
+1. [IMDB 5000 Movie Dataset](https://www.kaggle.com/carolzhangdc/imdb-5000-movie-dataset)
+2. [The Movies Dataset](https://www.kaggle.com/rounakbanik/the-movies-dataset)
+3. [List of movies in 2018](https://en.wikipedia.org/wiki/List_of_American_films_of_2018)
+4. [List of movies in 2019](https://en.wikipedia.org/wiki/List_of_American_films_of_2019)
+5. [List of movies in 2020](https://en.wikipedia.org/wiki/List_of_American_films_of_2020)
+
+### Please do ⭐ the repository, if it helped you in anyways
