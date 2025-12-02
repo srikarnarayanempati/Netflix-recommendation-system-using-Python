@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Recommendation System</title>
+</head>
+<body>
+<center>
+    <h1>Movie Recommendation System</h1>
+    <form action="/recommend" method="post">
+        <label for="movie_name">Enter a Movie:</label>
+        <input type="text" id="movie_name" name="movie_name" required>
+        <input type="submit" value="Recommend">
+    </form>
+
+    {% if movie_name %}
+        <h2>Recommended Movies for {{ movie_name }}:</h2>
+        <ul>
+            {% for movie in recommended_movies %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+</center>
+</body>
+</html>
+
+
+<style>
+body {
+   background-image: url("https://img.freepik.com/free-photo/arrangement-cinematography-elements-with-copy-space_23-2148457805.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1697328000&semt=ais");
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-size: cover;
+}
+
+center{
+   margin-top: 300px;
+   margin-left: 400px;
+   
+}
+h1{
+  font-size: 40px;
+}
+form{
+  font-size: 30px;
+}
+
+</style>
